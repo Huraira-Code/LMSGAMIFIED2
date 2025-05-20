@@ -9,7 +9,7 @@ const connectionToDB= async ()=>{
 
     try {
         const{ connection}= await mongoose.connect(
-            process.env.MONGODB_URL||`mongodb://localhost:27017/my_database`
+            process.env.MONGODB_URL||`mongodb+srv://huraira:Usama10091@cluster0.hnawam1.mongodb.net/LMS`
         )
     
         if(connection){
