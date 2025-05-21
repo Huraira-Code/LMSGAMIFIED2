@@ -203,7 +203,12 @@ export const removeCourse = asyncHandler(async (req, res, next) => {
  * Adds a lecture to a course and uploads video to Cloudinary.
  */
 export const addLectureToCourseById = asyncHandler(async (req, res, next) => {
-  console.log("one bottle pepsi farzain bhai sexy");
+  // CORS Headers
+  res.setHeader("Access-Control-Allow-Origin", "https://ednova.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // console.log("one bottle pepsi farzain bhai sexy");
 
   const { title, description } = req.body;
 
@@ -234,7 +239,7 @@ export const addLectureToCourseById = asyncHandler(async (req, res, next) => {
         lectureData.lecture.public_id = result.public_id;
         lectureData.lecture.secure_url = result.secure_url;
       }
-      fs.rm(`uploads/${req.file.filename}`);
+      // fs.rm(`uploads/${req.file.filename}`);
     } catch (error) {
       return next(new AppError(error.message, 500));
     }
