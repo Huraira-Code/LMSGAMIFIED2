@@ -51,12 +51,24 @@ export const getLecturesByCourseId = asyncHandler(async (req, res, next) => {
  * Creates a new course and optionally uploads a thumbnail image.
  */
 export const createCourse = asyncHandler(async (req, res, next) => {
-  console.log("make me inform")
+  // CORS Headers
+  res.setHeader('Access-Control-Allow-Origin', 'https://ednova.netlify.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // 👇 Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  console.log("make me inform");
+
   const { title, description, category, createdBy } = req.body;
   if (!title || !description || !category || !createdBy) {
-    return next(new AppError("Alll fields are required ", 400));
+    return next(new AppError("All fields are required", 400));
   }
-  let course; // 👈 declare course here so it's accessible outside
+
+  let course;
 
   try {
     course = await Course.create({
@@ -70,12 +82,11 @@ export const createCourse = asyncHandler(async (req, res, next) => {
       },
     });
 
-    console.log(course); // You should see this now
+    console.log(course);
   } catch (error) {
     console.error("Course creation failed:", error.message);
     return next(new AppError("Error creating course: " + error.message, 500));
   }
-  
 
   if (req.file) {
     console.log("File over here");
@@ -88,22 +99,22 @@ export const createCourse = asyncHandler(async (req, res, next) => {
         course.thumbnail.public_id = result.public_id;
         course.thumbnail.secure_url = result.secure_url;
       }
-      fs.rm(`uploads/${req.file.filename}`);
+      fs.rmSync(`uploads/${req.file.filename}`);
     } catch (error) {
       console.log(error.message);
       return next(new AppError(error.message, 500));
     }
+
     await course.save();
     console.log("me5");
-
-    res.status(200).json({
-      success: true,
-      message: "Course created sucesssfully ",
-      course,
-    });
   }
-});
 
+  res.status(200).json({
+    success: true,
+    message: "Course created successfully",
+    course,
+  });
+});
 
 //Delete Course By ID
 export const deleteCourse = asyncHandler(async (req, res, next) => {
