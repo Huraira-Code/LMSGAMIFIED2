@@ -18,7 +18,8 @@ cloudinary.v2.config({
  * @Razorpay configuration for payment gateway
  */
 
-app.listen(PORT, async () => {
-  await connectDB();
-  console.log(`App is running at  http:localhost:${PORT} `);
+connectDB().then(() => {
+  app.listen(8000, () => {
+    console.log("🚀 Server is running on port 8000");
+  });
 });
