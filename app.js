@@ -18,9 +18,24 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+  "https://ednova.netlify.app",
+  "http://localhost:5173",
+  // add more domains here
+];
+
 app.use(
   cors({
-    origin: "https://ednova.netlify.app",
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps, curl, postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
     preflightContinue: false,
@@ -28,6 +43,7 @@ app.use(
     credentials: true,
   })
 );
+
 
 app.use(cookieParser());
 
