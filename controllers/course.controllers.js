@@ -204,9 +204,12 @@ export const removeCourse = asyncHandler(async (req, res, next) => {
  */
 export const addLectureToCourseById = asyncHandler(async (req, res, next) => {
   // CORS Headers
-  res.setHeader("Access-Control-Allow-Origin", "https://ednova.netlify.app");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.set({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers":
+      "'Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'",
+  });
 
   const { title, description } = req.body;
 
