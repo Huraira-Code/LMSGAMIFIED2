@@ -3,13 +3,13 @@ import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
 import morgan from "morgan";
-
 import errorMiddlware from "./middlewares/error.middleware.js";
 import courseRoutes from "./routes/course.Routes.js";
 import miscRoutes from "./routes/miscellanous.routes.js";
 import paymentRoutes from './routes/payment.routes.js'
 import userRoutes from "./routes/user.Routes.js";
 import bodyParser from 'body-parser';
+import connectDB from "./config/dbConnection.js";
 
 config();
 
