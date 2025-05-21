@@ -1,5 +1,6 @@
 import cloudinary from "cloudinary";
 import fs from "fs/promises";
+import fs from "fs";
 
 import asyncHandler from "../middlewares/asyncHAndler.middleware.js";
 import Course from "../models/course.model.js";
@@ -95,18 +96,20 @@ export const createCourse = asyncHandler(async (req, res, next) => {
       const result = await cloudinary.v2.uploader.upload(req.file.path, {
         folder: "lms",
       });
+
       if (result) {
         course.thumbnail.public_id = result.public_id;
         course.thumbnail.secure_url = result.secure_url;
       }
-      fs.unlinkSync(`/tmp/upload/${req.file.filename}`);
+
+      // ✅ Vercel-safe async deletion
+      await fs.promises.unlink(req.file.path);
     } catch (error) {
-      console.log(error.message);
+      console.error("Upload/Delete error:", error.message);
       return next(new AppError(error.message, 500));
     }
 
     await course.save();
-    console.log("me5");
   }
 
   res.status(200).json({
