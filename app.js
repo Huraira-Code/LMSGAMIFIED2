@@ -6,9 +6,9 @@ import morgan from "morgan";
 import errorMiddlware from "./middlewares/error.middleware.js";
 import courseRoutes from "./routes/course.Routes.js";
 import miscRoutes from "./routes/miscellanous.routes.js";
-import paymentRoutes from './routes/payment.routes.js'
+import paymentRoutes from "./routes/payment.routes.js";
 import userRoutes from "./routes/user.Routes.js";
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
 
 config();
 
@@ -22,6 +22,7 @@ app.use(
   cors({
     origin: "https://ednova.netlify.app",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
     preflightContinue: false,
     optionsSuccessStatus: 204,
     credentials: true,
