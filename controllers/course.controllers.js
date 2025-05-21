@@ -99,7 +99,7 @@ export const createCourse = asyncHandler(async (req, res, next) => {
         course.thumbnail.public_id = result.public_id;
         course.thumbnail.secure_url = result.secure_url;
       }
-      fs.rmSync(`uploads/${req.file.filename}`);
+      fs.rmSync(`/tmp/upload/${req.file.filename}`);
     } catch (error) {
       console.log(error.message);
       return next(new AppError(error.message, 500));
