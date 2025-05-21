@@ -27,7 +27,7 @@ export const getAllCourse = asyncHandler(async (req, res, next) => {
  */
 export const getLecturesByCourseId = asyncHandler(async (req, res, next) => {
   console.log("ashfiuhdon");
-  
+
   try {
     const { id } = req.params;
 
@@ -52,12 +52,12 @@ export const getLecturesByCourseId = asyncHandler(async (req, res, next) => {
  */
 export const createCourse = asyncHandler(async (req, res, next) => {
   // CORS Headers
-  res.setHeader('Access-Control-Allow-Origin', 'https://ednova.netlify.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader("Access-Control-Allow-Origin", "https://ednova.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   // 👇 Handle preflight
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
@@ -99,7 +99,7 @@ export const createCourse = asyncHandler(async (req, res, next) => {
         course.thumbnail.public_id = result.public_id;
         course.thumbnail.secure_url = result.secure_url;
       }
-      fs.rmSync(`/tmp/upload/${req.file.filename}`);
+      fs.unlinkSync(`/tmp/upload/${req.file.filename}`);
     } catch (error) {
       console.log(error.message);
       return next(new AppError(error.message, 500));
@@ -147,8 +147,6 @@ export const deleteCourse = asyncHandler(async (req, res, next) => {
     return next(new AppError("Failed to delete course from DB", 500));
   }
 });
-
-
 
 /**
  * @UPDATE_COURSE_BY_ID
@@ -206,7 +204,7 @@ export const removeCourse = asyncHandler(async (req, res, next) => {
  */
 export const addLectureToCourseById = asyncHandler(async (req, res, next) => {
   console.log("one bottle pepsi farzain bhai sexy");
-  
+
   const { title, description } = req.body;
 
   const { id } = req.params;
