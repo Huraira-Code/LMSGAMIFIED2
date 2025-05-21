@@ -9,7 +9,6 @@ import miscRoutes from "./routes/miscellanous.routes.js";
 import paymentRoutes from './routes/payment.routes.js'
 import userRoutes from "./routes/user.Routes.js";
 import bodyParser from 'body-parser';
-import connectDB from "./config/dbConnection.js";
 
 config();
 

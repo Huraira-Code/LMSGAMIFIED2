@@ -1,12 +1,17 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-url="mongodb+srv://huraira:Usama10091@cluster0.hnawam1.mongodb.net/Kiraydar"
-const connectDB = () => {
-    console.log("we are in database")
-    return mongoose.connect(url, {
-        useNewUrlParser : true,
-        useUnifiedTopology : true,
+const url = "mongodb+srv://huraira:Usama10091@cluster0.hnawam1.mongodb.net/Kiraydar";
+
+export const connectDB = async () => {
+  try {
+    console.log("🔄 Connecting to MongoDB...");
+    const conn = await mongoose.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
-}
-
-module.exports = connectDB
+    console.log(`✅ MongoDB connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  }
+};
